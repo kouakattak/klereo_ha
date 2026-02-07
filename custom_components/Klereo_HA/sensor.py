@@ -6,8 +6,6 @@ from homeassistant.components.sensor import (
 )
 from homeassistant.const import (
     UnitOfTemperature,
-    UnitOfElectricPotential,
-    UnitOfPH,
     PERCENTAGE,
 )
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
@@ -17,9 +15,9 @@ async def async_setup_entry(hass, entry, async_add_entities):
     """Configuration des capteurs."""
     coordinator = hass.data[DOMAIN][entry.entry_id]["coordinator"]
     
-    # On définit les capteurs avec des constantes d'unités officielles
+    # On définit les capteurs
     sensors = [
-        # Températures
+        # Températures (On utilise la constante officielle pour C°)
         KlereoSensor(
             coordinator, 
             "Température Eau", 
@@ -37,20 +35,20 @@ async def async_setup_entry(hass, entry, async_add_entities):
             SensorStateClass.MEASUREMENT
         ),
         
-        # Chimie
+        # Chimie (On utilise des strings simples pour éviter les ImportErrors)
         KlereoSensor(
             coordinator, 
             "pH", 
             "ph", 
-            UnitOfPH.PH, 
-            None, # Pas de device class spécifique pour le pH (ou PH si supporté)
+            "pH", 
+            None, # Le pH n'a pas toujours de device_class selon les versions HA
             SensorStateClass.MEASUREMENT
         ),
         KlereoSensor(
             coordinator, 
             "Redox", 
             "redox", 
-            UnitOfElectricPotential.MILLIVOLT, 
+            "mV", 
             SensorDeviceClass.VOLTAGE, 
             SensorStateClass.MEASUREMENT
         ),
@@ -71,8 +69,7 @@ class KlereoSensor(CoordinatorEntity, SensorEntity):
         super().__init__(coordinator)
         self._sensor_type = sensor_type
         
-        # --- DEFINITION DES ATTRIBUTS NATIFS (MODERNE) ---
-        # Cela évite l'erreur "None is not a recognized unit"
+        # --- DEFINITION DES ATTRIBUTS NATIFS ---
         self._attr_name = f"Piscine {name}"
         self._attr_unique_id = f"klereo_{sensor_type}"
         self._attr_native_unit_of_measurement = unit
@@ -82,7 +79,6 @@ class KlereoSensor(CoordinatorEntity, SensorEntity):
     @property
     def native_value(self):
         """Retourne la valeur du capteur."""
-        # Sécurité : Si pas de données, on ne plante pas
         if not self.coordinator.data:
             return None
 
@@ -97,7 +93,7 @@ class KlereoSensor(CoordinatorEntity, SensorEntity):
                 return self._get_probe_val(probes, idx)
                 
             if self._sensor_type == "temp_air":
-                # L'air est souvent sur l'index 1, à vérifier selon votre JSON
+                # L'air est souvent sur l'index 1
                 return self._get_probe_val(probes, 1)
 
             if self._sensor_type == "ph":
@@ -142,7 +138,6 @@ class KlereoSensor(CoordinatorEntity, SensorEntity):
                 return f"Mode {m}"
 
         except Exception as e:
-            # En cas d'erreur de parsing, on renvoie None pour passer en 'Unavailable'
             return None
 
         return None
