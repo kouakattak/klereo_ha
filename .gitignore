@@ -1,0 +1,6 @@
+# Python artifacts
+__pycache__/
+*.pyc
+
+# Ignorer le dossier de test
+test/
