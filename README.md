@@ -80,7 +80,7 @@ type: vertical-stack
 cards:
   # --- 1. EN-TÊTE ---
   - type: entity
-    entity: sensor.piscine_temperature
+    entity: sensor.piscine_temperature_eau
     name: Ma Piscine
     icon: mdi:pool
     attribute: date_communication
@@ -91,7 +91,7 @@ cards:
     square: true
     cards:
       - type: gauge
-        entity: sensor.piscine_temperature
+        entity: sensor.piscine_temperature_eau
         name: Eau
         unit: °C
         min: 0
