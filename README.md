@@ -78,14 +78,7 @@ Créez une carte **Manuel** et collez le code suivant :
 ```yaml
 type: vertical-stack
 cards:
-  # --- 1. EN-TÊTE ---
-  - type: entity
-    entity: sensor.piscine_temperature_eau
-    name: Ma Piscine
-    icon: mdi:pool
-    attribute: date_communication
-
-  # --- 2. TEMPÉRATURES ---
+  # --- 1. TEMPÉRATURES ---
   - type: grid
     columns: 2
     square: true
@@ -109,7 +102,7 @@ cards:
         max: 50
         needle: true
 
-  # --- 3. ÉTAT & LUMIÈRE ---
+  # --- 2. ÉTAT & LUMIÈRE ---
   - type: glance
     show_name: true
     show_state: true
@@ -131,7 +124,7 @@ cards:
         name: Volet
         icon: mdi:shield-check
 
-  # --- 4. CHIMIE ---
+  # --- 3. CHIMIE ---
   - type: grid
     columns: 2
     square: true
@@ -157,7 +150,7 @@ cards:
           yellow: 800
           red: 900
 
-  # --- 5. PILOTAGE & MAINTENANCE ---
+  # --- 4. PILOTAGE & MAINTENANCE ---
   - type: entities
     title: Pilotage & Consommables
     entities:
