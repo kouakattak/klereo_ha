@@ -30,24 +30,39 @@ PUMP_SPEEDS = {
     3: "Vitesse 3 (Max)",
 }
 
-OUT_INDEXES = {
-    "light": 0,
-    "pump": 1,
-    "aux": 2,
-    "heating": 3,
+# --- NOUVEAU : DÉFINITION OFFICIELLE DES SORTIES (Source PHP) ---
+# Format : Index: ("Nom", "Type")
+# Type : "pump", "heater", "light", "binary" (On/Off simple)
+KLEREO_OUT_MAP = {
+    0:  ("Eclairage", "light"),
+    1:  ("Filtration", "pump"),
+    2:  ("Correcteur pH", "binary"),
+    3:  ("Désinfectant", "binary"),
+    4:  ("Chauffage", "heater"),
+    5:  ("Auxiliaire 1", "binary"),
+    6:  ("Auxiliaire 2", "binary"),
+    7:  ("Auxiliaire 3", "binary"),
+    8:  ("Floculant", "binary"),
+    9:  ("Auxiliaire 4", "binary"),
+    10: ("Auxiliaire 5", "binary"),
+    11: ("Auxiliaire 6", "binary"),
+    12: ("Auxiliaire 7", "binary"),
+    13: ("Auxiliaire 8", "binary"),
+    14: ("Auxiliaire 9", "binary"),
+    15: ("Désinfectant Hybride", "binary"),
 }
 
+# Index des Sondes (Probes) - Inchangé car c'est une autre liste
 PROBE_INDEXES = {
     "air": 1,
     "pressure": 3,
-    "salt": 4,
+    "flow": 9,
     "ph_tank": 6,
     "cl_tank": 7,
     "cover": 8,
-    "flow": 9,
 }
 
-# --- NOUVEAU : CODES ALARMES (Source : Plugin Jeedom) ---
+# Codes Alarmes
 ALARM_CODES = {
     1: "Lavage filtre nécessaire",
     2: "Bidon pH vide",
