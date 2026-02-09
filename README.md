@@ -8,6 +8,7 @@
 **Klereo Connect** est une intégration personnalisée (**Custom Component**) pour Home Assistant qui permet de connecter les systèmes d'automatisation de piscine **Klereo (K-Link)** via l'API Cloud V3.
 
 Cette intégration remplace les anciennes implémentations manuelles (YAML, `rest_command`, templates) par une solution **native en Python**, plus rapide, plus robuste et configurable entièrement via l'interface utilisateur.
+Inspiré du plugin équivalent pour Jeedom  https://github.com/MrWaloo/jeedom-klereo/tree/stable
 
 ## ✨ Fonctionnalités
 

@@ -192,7 +192,50 @@ class KlereoAlarmSensor(CoordinatorEntity, SensorEntity):
         return {"liste_alarmes": self._get_active_alarms(), "codes_bruts": self._get_raw_codes()}
     def _get_active_alarms(self):
         if not self.coordinator.data: return []
-        return [ALARM_CODES.get(int(a.get("code", 0)), f"Alarme {a.get('code')}") for a in self.coordinator.data.get("alarms", []) if str(a.get("isActive", "0")) == "1"]
+        
+        alarms_list = []
+        raw_alarms = self.coordinator.data.get("alarms", [])
+        
+        for alarm in raw_alarms:
+            if str(alarm.get("isActive", "0")) != "1":
+                continue
+                
+            code = int(alarm.get("code", 0))
+            param = int(alarm.get("param", 0))
+            
+            msg = self._format_alarm_message(code, param)
+            alarms_list.append(msg)
+            
+        return alarms_list
+
     def _get_raw_codes(self):
         if not self.coordinator.data: return []
         return [int(a.get("code")) for a in self.coordinator.data.get("alarms", []) if str(a.get("isActive", "0")) == "1"]
+
+    def _format_alarm_message(self, code, param):
+        """Formate le message d'alarme selon la logique PHP (gestion du param)."""
+        base_msg = ALARM_CODES.get(code, f"Code alerte inconnu : {code}")
+        extra_msg = ""
+
+        if code in [1, 7, 8, 10, 36]: # param = CapteurID
+            # On affiche simplement l'ID du capteur faute de mapping complet "getSensorIndex"
+            extra_msg = f" - Capteur {param}"
+        elif code == 5:
+            extra_msg = " - RFID"
+        elif code == 6:
+            if param == 0: extra_msg = " - pH"
+            elif param == 1: extra_msg = " - Désinfectant"
+        elif code in [13, 14]:
+            extra_msg = f" - débit {param}"
+        elif code == 35:
+            extra_msg = f" - sortie {param}"
+        elif code == 40:
+            extra_msg = f" - BSVError {param}"
+        elif code == 41:
+            extra_msg = f" - Communication {param}"
+        elif code in [50, 51, 52, 54, 61]:
+            extra_msg = f" - code d'erreur {param}"
+        elif code == 53:
+            extra_msg = f" - pompe numéro {param}"
+            
+        return f"{base_msg}{extra_msg}"
