@@ -194,12 +194,9 @@ class KlereoAlarmSensor(CoordinatorEntity, SensorEntity):
         if not self.coordinator.data: return []
         
         alarms_list = []
-        raw_alarms = self.coordinator.data.get("alarms", [])
+        raw_alarms = self.coordinator.data.get("alerts", [])
         
         for alarm in raw_alarms:
-            if str(alarm.get("isActive", "0")) != "1":
-                continue
-                
             code = int(alarm.get("code", 0))
             param = int(alarm.get("param", 0))
             
@@ -210,7 +207,7 @@ class KlereoAlarmSensor(CoordinatorEntity, SensorEntity):
 
     def _get_raw_codes(self):
         if not self.coordinator.data: return []
-        return [int(a.get("code")) for a in self.coordinator.data.get("alarms", []) if str(a.get("isActive", "0")) == "1"]
+        return [int(a.get("code")) for a in self.coordinator.data.get("alerts", [])]
 
     def _format_alarm_message(self, code, param):
         """Formate le message d'alarme selon la logique PHP (gestion du param)."""
