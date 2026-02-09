@@ -15,7 +15,8 @@ from .const import (
     PUMP_SPEEDS, 
     PROBE_INDEXES, 
     ALARM_CODES, 
-    KLEREO_OUT_MAP
+    KLEREO_OUT_MAP,
+    SENSOR_TYPES
 )
 
 async def async_setup_entry(hass, entry, async_add_entities):
@@ -215,8 +216,11 @@ class KlereoAlarmSensor(CoordinatorEntity, SensorEntity):
         extra_msg = ""
 
         if code in [1, 7, 8, 10, 36]: # param = CapteurID
-            # On affiche simplement l'ID du capteur faute de mapping complet "getSensorIndex"
-            extra_msg = f" - Capteur {param}"
+            if param in SENSOR_TYPES:
+                name, unit = SENSOR_TYPES[param]
+                extra_msg = f" - {name} ({unit})"
+            else:
+                extra_msg = f" - Capteur {param}"
         elif code == 5:
             extra_msg = " - RFID"
         elif code == 6:

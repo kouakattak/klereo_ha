@@ -52,6 +52,42 @@ KLEREO_OUT_MAP = {
     15: ("Désinfectant Hybride", "binary"),
 }
 
+# Mapping des types de capteurs pour les alarmes (Source PHP getSensorIndex)
+SENSOR_TYPES = {
+    0: ("Température coffret Care/premium", "°C"),
+    1: ("Température air", "°C"),
+    2: ("Température eau", "°C"),
+    3: ("pH seul", "pH"),
+    4: ("Redox seul", "mV"),
+    5: ("Pression filtre", "mbar"),
+    6: ("Niveau bidon pH", "%"),
+    7: ("Niveau bidon traitement", "%"),
+    8: ("Position volet / couverture", "%"),
+    9: ("pH Gen2", "pH"),
+    10: ("Redox Gen2", "mV"),
+    11: ("Chlore Gen2", "mg/L"),
+    12: ("Température eau Gen2", "°C"),
+    13: ("Pression Gen2-A", "mbar"),
+    14: ("Pression Gen2-B", "mbar"),
+    15: ("Débit1 Kompact / Gen3-1", "m³/h"),
+    16: ("Température eau Kompact / Gen3-1", "°C"),
+    17: ("pH Kompact / Gen3-1", "pH"),
+    18: ("Redox Kompact / Gen3-1", "mV"),
+    19: ("Température air2", "°C"),
+    20: ("Température air3", "°C"),
+    21: ("Pression Gen3-1", "mbar"),
+    22: ("Chlore Gen3-1", "mg/L"),
+    23: ("Niveau bidon floculant", "%"),
+    24: ("Débit2 Gen3-1", "m³/h"),
+    25: ("Température air4 / Débit1 Gen3-2", "°C"),
+    26: ("Température air5 / Débit2 Gen3-2", "°C"),
+    27: ("Température air6 / Température Gen3-2", "°C"),
+    28: ("Température air7 / pH Gen3-2", "°C"),
+    29: ("Température air8 / Redox Gen3-2", "°C"),
+    30: ("Température air9 / Pression Gen3-2", "°C"),
+    31: ("Température air10 / Chlore Gen3-2", "°C"),
+}
+
 # Index des Sondes (Probes) - Inchangé car c'est une autre liste
 PROBE_INDEXES = {
     "air": 1,
